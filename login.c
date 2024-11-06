@@ -22,7 +22,7 @@ void menuLogin(){
     }
 
     //direcionando para opcao desejada
-    if(opcaoMenuLogin == 1) ;
+    if(opcaoMenuLogin == 1) login();
     else criarCadastro(); 
 }
 
@@ -40,10 +40,10 @@ void criarCadastro(){
     scanf(" %s", senhaNovoUsuario);
 
     //verificacao tamanho da senha
-    while(strlen(senhaNovoUsuario) < 8 && strlen(senhaNovoUsuario) > 16){
+    while(strlen(senhaNovoUsuario) < 8 || strlen(senhaNovoUsuario) > 16){
         printf("tamanho da senha invalido\n");
         printf("digite uma senha de no minimo 8 caracteres e no maximo 16: ");
-        scanf(" %s", novoUsuario.senha);
+        scanf(" %s", senhaNovoUsuario);
     }
 
     //confirmacao de senha
@@ -76,15 +76,23 @@ void criarCadastro(){
     printf("cadastro realizado com sucesso.\n");
 }
 
-/*void login(){
+void login(){
+    //leitura de apelido e senha
     char apelido[20];
-    char senha_login[16];
     printf("digite seu apelido: ");
-    scanf(" %S", apelido);
-    printf("digite sua senha: ");
-    scanf(" %s", senha_login);
+    scanf(" %s", apelido);
 
-    //verificando no arquivo
-    verificacao_login(apelido, senha_login);
-}*/
+    char senha[16];
+    printf("digite sua senha: ");
+    scanf(" %s", senha);
+
+    //aplicando hash na senha
+    int tamanhoSenha = strlen(senha);
+    for(int i = 0; i < tamanhoSenha; i++){
+        if(i % 2 == 0 ) senha[i] = senha[i] + 13;
+        else senha[i] = senha[i] - 5;
+    }
+
+    verificacaoLogin(apelido, senha);
+}
 

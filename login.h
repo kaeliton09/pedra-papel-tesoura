@@ -16,3 +16,5 @@ typedef struct{
 void menuLogin();
 
 void criarCadastro();
+
+void  login();

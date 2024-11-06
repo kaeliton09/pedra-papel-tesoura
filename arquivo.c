@@ -10,11 +10,73 @@ void salvarNovoUsuario(Usuario const * novoUsuario){
 
     //escrevendo a struc no arquivo
     fwrite(novoUsuario, sizeof(Usuario), 1, arquivo);
-
     fclose(arquivo);
 
+    //lendo a quantidade de usuarios
+    FILE *arquivoContagem = fopen("contagem.txt", "r");
+    if(arquivoContagem == NULL){
+        printf("nao foi possivel abrir o arquivo.\n");
+        return ;
+    }
+    int quantidadeUsuarios = 0;
+    fscanf(arquivoContagem, "%d", &quantidadeUsuarios);
+    fclose(arquivoContagem);
+
+    quantidadeUsuarios++;
+
+    //arindo arquivo para gravacao
+    FILE *arquivoContagem1 = fopen("contagem.txt", "w+");
+    if(arquivoContagem1 == NULL){
+        printf("nao foi possivel abrir o arquivo.\n");
+        return ;
+    }
+
+    fprintf(arquivoContagem1, "%d", quantidadeUsuarios);
+    fclose(arquivoContagem1);
 }
 
-int verificacao_login(char apelido[20], char senha[16]){
-    
+int verificacaoLogin(char * apelido, char * senha){
+    //abrindo arquivo com quantidade de usuarios
+    //lendo a quantidade de usuarios
+    FILE *arquivoContagem = fopen("contagem.txt", "r");
+    if(arquivoContagem == NULL){
+        printf("nao foi possivel abrir o arquivo.\n");
+        return 0;
+    }
+    int quantidadeUsuarios = 0;
+    fscanf(arquivoContagem, "%d", &quantidadeUsuarios);
+    fclose(arquivoContagem);
+
+
+    //abrindo arquivo para leitura de dados
+    FILE * arquivo = fopen("usuarios.txt", "r");
+    if(arquivo == NULL){
+        printf("nao foi possivel abrir o arquivo.\n");
+        return 0;
+    }
+
+    //criando um ponteiro que aponta para um usurario
+    Usuario usuariosLogin[quantidadeUsuarios];
+    //lendo os usuarios do arquivo 
+    fread(usuariosLogin, sizeof(Usuario), quantidadeUsuarios, arquivo);
+
+    //verificacao apelido
+    int verificaApelido = 0;
+    int id = 0;
+    for(int i = 0; i < quantidadeUsuarios; i++){
+        if(strcmp(usuariosLogin[i].apelido, apelido) == 0){
+            verificaApelido = 1;
+            id = i;
+        } 
+    }
+    if(verificaApelido == 0){
+        printf("usuario ou senhas invalidos.\n");
+    }
+    else{//verificacao senha
+        if(strcmp(usuariosLogin[id].senha, senha) != 0) printf("usuario ou senhas invalidos.\n");
+        else{
+            printf("deu certo.\n");
+            return 1;
+        }
+    }
 }

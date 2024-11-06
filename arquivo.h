@@ -3,3 +3,5 @@
 #include <stdio.h>
 
 void salvarNovoUsuario(Usuario const * novoUsuario);
+
+int verificacaoLogin(char * apelido, char * senha);
