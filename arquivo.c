@@ -1,6 +1,6 @@
 #include "arquivo.h"
 
-void salvar_novo_usuario(Usuario const * novo_usuario){
+void salvarNovoUsuario(Usuario const * novoUsuario){
     //abrindo arquivos de usuarios 
     FILE *arquivo = fopen("usuarios.txt", "a+");
     if(arquivo == NULL){
@@ -9,7 +9,7 @@ void salvar_novo_usuario(Usuario const * novo_usuario){
     }
 
     //escrevendo a struc no arquivo
-    fwrite(novo_usuario, sizeof(Usuario), 1, arquivo);
+    fwrite(novoUsuario, sizeof(Usuario), 1, arquivo);
 
     fclose(arquivo);
 

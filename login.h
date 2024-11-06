@@ -13,6 +13,6 @@ typedef struct{
     int partidas;
 } Usuario;
 
-void menu_login();
+void menuLogin();
 
-void criar_cadastro();
+void criarCadastro();
