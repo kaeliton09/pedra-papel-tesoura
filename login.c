@@ -1,5 +1,6 @@
 #include "login.h"
 #include "arquivo.h"
+#include "jogo.h"
 
 
 //menu login
@@ -89,10 +90,14 @@ void login(){
     //aplicando hash na senha
     int tamanhoSenha = strlen(senha);
     for(int i = 0; i < tamanhoSenha; i++){
-        if(i % 2 == 0 ) senha[i] = senha[i] + 13;
+        if(i % 2 == 0) senha[i] = senha[i] + 13;
         else senha[i] = senha[i] - 5;
     }
 
-    verificacaoLogin(apelido, senha);
+    if(verificacaoLogin(apelido, senha)){
+        printf("deu certo\n");
+    }else{
+        menuLogin();
+    }
 }
 

@@ -66,17 +66,20 @@ int verificacaoLogin(char * apelido, char * senha){
     for(int i = 0; i < quantidadeUsuarios; i++){
         if(strcmp(usuariosLogin[i].apelido, apelido) == 0){
             verificaApelido = 1;
+            printf(" %s\n", usuariosLogin[i].senha);
+            printf(" %s\n", senha);
             id = i;
         } 
     }
     if(verificaApelido == 0){
         printf("usuario ou senhas invalidos.\n");
+        return 0;
     }
-    else{//verificacao senha
-        if(strcmp(usuariosLogin[id].senha, senha) != 0) printf("usuario ou senhas invalidos.\n");
-        else{
-            printf("deu certo.\n");
-            return 1;
-        }
+    //verificacao senha
+    if(strcmp(usuariosLogin[id].senha, senha) != 0){
+        printf("usuario ou senhas invalidos.\n");
+        return 0;
     }
+    //operacao realizada com sucesso
+    return 1;
 }

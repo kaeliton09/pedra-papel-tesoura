@@ -17,4 +17,4 @@ void menuLogin();
 
 void criarCadastro();
 
-void  login();
+void login();
