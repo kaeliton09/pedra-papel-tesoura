@@ -5,3 +5,5 @@
 void salvarNovoUsuario(Usuario const * novoUsuario);
 
 int verificacaoLogin(char * apelido, char * senha);
+
+Usuario* UsuarioAtual(char * apelido);

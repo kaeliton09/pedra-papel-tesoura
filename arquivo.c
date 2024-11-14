@@ -83,3 +83,39 @@ int verificacaoLogin(char * apelido, char * senha){
     //operacao realizada com sucesso
     return 1;
 }
+
+Usuario* UsuarioAtual(char * apelido){
+    //abrindo arquivo com quantidade de usuarios
+    //lendo a quantidade de usuarios
+    FILE *arquivoContagem = fopen("contagem.txt", "r");
+    if(arquivoContagem == NULL){
+        printf("nao foi possivel abrir o arquivo.\n");
+        return NULL;
+    }
+    int quantidadeUsuarios = 0;
+    fscanf(arquivoContagem, "%d", &quantidadeUsuarios);
+    fclose(arquivoContagem);
+
+
+    //abrindo arquivo para leitura de dados
+    FILE * arquivo = fopen("usuarios.txt", "r");
+    if(arquivo == NULL){
+        printf("nao foi possivel abrir o arquivo.\n");
+        return NULL;
+    }
+
+    //criando um ponteiro que aponta para um usurario
+    Usuario usuariosLogin[quantidadeUsuarios];
+    //lendo os usuarios do arquivo 
+    fread(usuariosLogin, sizeof(Usuario), quantidadeUsuarios, arquivo);
+
+    //verificacao apelido
+    for(int i = 0; i < quantidadeUsuarios; i++){
+        if(strcmp(usuariosLogin[i].apelido, apelido) == 0){
+            Usuario* usuarioEncontrado = malloc(sizeof(Usuario));
+            *usuarioEncontrado = usuariosLogin[i];
+            return usuarioEncontrado;
+        } 
+    }
+    return NULL;
+}

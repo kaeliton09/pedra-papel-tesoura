@@ -66,7 +66,7 @@ void criarCadastro(){
         if(i % 2 == 0) novoUsuario.senha[i] = senhaDeConfirmacao[i] + 13;
         else novoUsuario.senha[i] = senhaDeConfirmacao[i] - 5;
     }
-
+    novoUsuario.senha[tamanhoSenha-1] = '\0';
     //inicializando outras variaveis do novo usuario
     novoUsuario.nivel = 0;
     novoUsuario.vitorias = 0;
@@ -75,6 +75,7 @@ void criarCadastro(){
     salvarNovoUsuario(&novoUsuario);
 
     printf("cadastro realizado com sucesso.\n");
+    menuLogin();
 }
 
 void login(){
@@ -93,9 +94,12 @@ void login(){
         if(i % 2 == 0) senha[i] = senha[i] + 13;
         else senha[i] = senha[i] - 5;
     }
+    senha[tamanhoSenha-1] = '\0'; 
 
     if(verificacaoLogin(apelido, senha)){
-        printf("deu certo\n");
+        Usuario * usuario = malloc(sizeof(Usuario));
+        usuario = UsuarioAtual(apelido);
+        telaInicial(usuario);
     }else{
         menuLogin();
     }
