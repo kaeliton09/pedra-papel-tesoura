@@ -10,13 +10,14 @@ void telaInicial(Usuario * usuario){
     printf("+ - - - - - - - - M E N U  - - - - - - - - +\n");
     printf("|(1) - jogar nova partida                  |\n");
     printf("|(2) - ver rank                            |\n");
+    printf("|(3) - ver perfil                          |\n");
     printf("+ - - - - - - - - - - - - - - - - - - - - -+\n");
     printf("digite o numero da opcao que deseja: ");
     int opcaoMenuJogo = 0;
     scanf("%d", &opcaoMenuJogo);
 
     //validando numero de opcao
-    while(opcaoMenuJogo != 1 && opcaoMenuJogo != 2){
+    while(opcaoMenuJogo != 1 && opcaoMenuJogo != 2 && opcaoMenuJogo != 3){
         printf("opcao invalida, digite um numero valido.\n");
         printf("digite o numero da opcao que deseja: ");
         scanf("%d", &opcaoMenuJogo);
@@ -24,7 +25,33 @@ void telaInicial(Usuario * usuario){
 
     //direcionando para opcao desejada
     if(opcaoMenuJogo == 1) NovaPartida(usuario);
-    else printf("top 1\n");
+    else if(opcaoMenuJogo == 2)printf("top 1\n");
+    else Perfil(usuario);
+}
+
+void Perfil(Usuario * usuario){
+    system("cls");
+    printf("bem vido(a) ao seu perfil %s\n", usuario->apelido);
+    printf("partidas: %d\n", usuario->partidas);
+    printf("vitorias: %d\n", usuario->vitorias);
+    printf("nivel: %d\n", usuario->nivel);
+    printf("o que desja fazer agora? \n");
+    printf("(1) - jogar novamente \n");
+    printf("(2) - voltar ao menu principal\n");
+    printf("digite o numero da opcao que deseja: ");
+    int opcaoVerificacao = 0;
+    scanf("%d", &opcaoVerificacao);
+        
+    //validando opcao
+    while(opcaoVerificacao != 1 && opcaoVerificacao != 2){
+        printf("opcao invalida, digite um numero valido.\n");
+        printf("digite o numero da opcao que deseja: ");
+        scanf("%d", &opcaoVerificacao);
+    }
+
+    if(opcaoVerificacao == 1) NovaPartida(usuario);
+    else telaInicial(usuario);
+
 }
 
 void NovaPartida(Usuario * usuario){
