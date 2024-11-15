@@ -60,6 +60,8 @@ int verificacaoLogin(char * apelido, char * senha){
     //lendo os usuarios do arquivo 
     fread(usuariosLogin, sizeof(Usuario), quantidadeUsuarios, arquivo);
 
+    fclose(arquivo);
+
     //verificacao apelido
     int verificaApelido = 0;
     int id = 0;
@@ -109,6 +111,8 @@ Usuario* UsuarioAtual(char * apelido){
     //lendo os usuarios do arquivo 
     fread(usuariosLogin, sizeof(Usuario), quantidadeUsuarios, arquivo);
 
+    fclose(arquivo);
+
     //verificacao apelido
     for(int i = 0; i < quantidadeUsuarios; i++){
         if(strcmp(usuariosLogin[i].apelido, apelido) == 0){
@@ -118,4 +122,53 @@ Usuario* UsuarioAtual(char * apelido){
         } 
     }
     return NULL;
+}
+
+int salvarDados(Usuario * usuario){
+    //abrindo arquivo com quantidade de usuarios
+    //lendo a quantidade de usuarios
+    FILE *arquivoContagem = fopen("contagem.txt", "r");
+    if(arquivoContagem == NULL){
+        printf("nao foi possivel abrir o arquivo.\n");
+        return 0;
+    }
+    int quantidadeUsuarios = 0;
+    fscanf(arquivoContagem, "%d", &quantidadeUsuarios);
+    fclose(arquivoContagem);
+
+
+    //abrindo arquivo para leitura de dados
+    FILE * arquivo = fopen("usuarios.txt", "r");
+    if(arquivo == NULL){
+        printf("nao foi possivel abrir o arquivo.\n");
+        return 0;
+    }
+
+    //criando um ponteiro que aponta para um usurario
+    Usuario usuariosLogin[quantidadeUsuarios];
+    //lendo os usuarios do arquivo 
+    fread(usuariosLogin, sizeof(Usuario), quantidadeUsuarios, arquivo);
+
+    fclose(arquivo);
+
+    //mandando os dados para o usuario certo
+    for(int i = 0; i < quantidadeUsuarios; i++){
+        if(strcmp(usuariosLogin[i].apelido, usuario->apelido) == 0){
+            usuariosLogin[i].nivel = usuario->nivel;
+            usuariosLogin[i].vitorias = usuario->vitorias;
+            usuariosLogin[i].partidas = usuario->partidas;
+        } 
+    }
+
+    //abrindo arquivo para salvar dados
+    FILE * arquivoSalvamento = fopen("usuarios.txt", "w");
+    if(arquivoSalvamento == NULL){
+        printf("nao foi possivel abrir o arquivo.\n");
+        return 0;
+    }
+
+    fwrite(usuariosLogin, sizeof(Usuario), quantidadeUsuarios, arquivo);
+
+    fclose(arquivoSalvamento);
+    return 1;
 }

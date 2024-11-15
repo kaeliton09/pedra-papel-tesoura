@@ -11,13 +11,14 @@ void telaInicial(Usuario * usuario){
     printf("|(1) - jogar nova partida                  |\n");
     printf("|(2) - ver rank                            |\n");
     printf("|(3) - ver perfil                          |\n");
+    printf("|(4) - sair                                |\n");
     printf("+ - - - - - - - - - - - - - - - - - - - - -+\n");
     printf("digite o numero da opcao que deseja: ");
     int opcaoMenuJogo = 0;
     scanf("%d", &opcaoMenuJogo);
 
     //validando numero de opcao
-    while(opcaoMenuJogo != 1 && opcaoMenuJogo != 2 && opcaoMenuJogo != 3){
+    while(opcaoMenuJogo != 1 && opcaoMenuJogo != 2 && opcaoMenuJogo != 3 && opcaoMenuJogo != 4){
         printf("opcao invalida, digite um numero valido.\n");
         printf("digite o numero da opcao que deseja: ");
         scanf("%d", &opcaoMenuJogo);
@@ -26,7 +27,8 @@ void telaInicial(Usuario * usuario){
     //direcionando para opcao desejada
     if(opcaoMenuJogo == 1) NovaPartida(usuario);
     else if(opcaoMenuJogo == 2)printf("top 1\n");
-    else Perfil(usuario);
+    else if(opcaoMenuJogo == 3) Perfil(usuario);
+    else sair(usuario);
 }
 
 void Perfil(Usuario * usuario){
@@ -183,4 +185,9 @@ int VerificaoVitoria(int JogadaUsuario, int JogadaBot){
         else if(JogadaBot == 2) return 1;//ganhou
         else return 2;//empatou
     }
+}
+
+void sair(Usuario * usuario){
+    salvarDados(usuario);
+    return;
 }
